@@ -5,10 +5,23 @@ require_relative 'fyt/config'
 require_relative 'fyt/parser'
 require_relative 'fyt/storage'
 
-require 'rss'
+require 'fileutils'
 
 # handles the general behaviour of FYT
 module FYT
+  def self.lock
+    lockfile = '~/.fyt/pid.lock'
+    dirname = File.dirname(lockfile)
+
+    FileUtils.mkdir_p(dirname) unless File.directory?(dirname)
+
+    File.open(lockfile, ::File::CREAT | ::File::EXCL | ::File::WRONLY) do |f|
+      f.write(Process.pid.to_s)
+    end
+
+    at_exit { File.delete(lockfile) if File.exist?(lockfile) }
+  end
+
   def self.run
     config = FYT::Config.new
     storage = FYT::Storage.new(

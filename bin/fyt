@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'fyt'
+
+FYT.lock
+
+case ARGV.first
+when 'run'
+  FYT.run
+when 'config'
+  FYT.config
+when 'add'
+  FYT.add
+else
+  puts "unknown paramter #{ARGV.first}"
+end

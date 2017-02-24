@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+
+require 'rss'
+
 module FYT
   # reads and prepares a youtube feed for further processing
   class Parser < FYT::Base
