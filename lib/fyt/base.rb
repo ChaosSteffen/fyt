@@ -8,7 +8,7 @@ module FYT
 
     def logger
       @@logger ||= Logger.new(STDOUT).tap do |logger|
-        logger.level = Logger::DEBUG
+        logger.level = Logger::INFO
       end
     end
   end
