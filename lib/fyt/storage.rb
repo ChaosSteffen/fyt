@@ -62,7 +62,17 @@ module FYT
 
       logger.debug "Executing: youtube-dl #{options_string}"
 
-      raise unless system("youtube-dl #{options_string}", out: $stdout, err: :out)
+      execute "youtube-dl #{options_string}"
+    end
+
+    def execute(command_string)
+      IO.pipe do |read_io, write_io|
+        break if system(command_string, out: write_io, err: :out)
+
+        write_io.close
+        logger.error read_io.read
+        raise
+      end
     end
 
     def delete_file!(filename)
