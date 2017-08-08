@@ -10,7 +10,7 @@ require 'fileutils'
 # handles the general behaviour of FYT
 module FYT
   def self.lock
-    lockfile = '~/.fyt/pid.lock'
+    lockfile = ENV['HOME'] + '/.fyt/pid.lock'
     dirname = File.dirname(lockfile)
 
     FileUtils.mkdir_p(dirname) unless File.directory?(dirname)
