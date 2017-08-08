@@ -2,10 +2,11 @@
 module FYT
   # Manages file downloads and storage
   class Storage < FYT::Base
-    def initialize(path, format_options, output_format)
+    def initialize(path, format_options, output_format, proxy = nil)
       @path = path || ''
       @format_options = format_options
       @output_format = output_format
+      @proxy = proxy
       @known_files = []
     end
 
@@ -52,13 +53,16 @@ module FYT
       options = [
         "-f '#{@format_options}'",
         "--merge-output-format '#{@output_format}'",
-        "-o '#{output_path}'",
-        "'#{url}'"
-      ].join(' ')
+        "-o '#{output_path}'"
+      ]
+      options << "--proxy '#{@proxy}'" if @proxy
+      options << "'#{url}'"
 
-      logger.debug "Executing: youtube-dl #{options}"
+      options_string = options.join(' ')
 
-      raise unless system("youtube-dl #{options}", out: $stdout, err: :out)
+      logger.debug "Executing: youtube-dl #{options_string}"
+
+      raise unless system("youtube-dl #{options_string}", out: $stdout, err: :out)
     end
 
     def delete_file!(filename)

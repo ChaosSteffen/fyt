@@ -27,7 +27,8 @@ module FYT
     storage = FYT::Storage.new(
       config[:storage_path],
       config[:format_options],
-      config[:output_format]
+      config[:output_format],
+      config[:proxy]
     )
 
     config[:feeds].each do |feed_config|
