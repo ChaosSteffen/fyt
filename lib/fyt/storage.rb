@@ -67,7 +67,7 @@ module FYT
 
     def execute(command_string)
       IO.pipe do |read_io, write_io|
-        break if system(command_string, out: write_io, err: :out)
+        break if system(command_string, out: write_io, err: write_io)
 
         write_io.close
         logger.error read_io.read
