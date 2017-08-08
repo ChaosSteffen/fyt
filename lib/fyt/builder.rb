@@ -48,6 +48,8 @@ module FYT
         @maker.image.url = image_url
         @maker.image.title = title
       end
+    rescue OpenURI::HTTPError => e
+      logger.debug "OpenURI::HTTPError: #{e.message}"
     end
 
     def add_item(link, title, filename)
