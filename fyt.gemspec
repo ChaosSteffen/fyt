@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.executables << 'fyt'
   s.date        = '2017-08-08'
   s.summary     = 'fyt'
-  s.description = 'Downloads a youtube channel and its videos and stores them'\
+  s.description = 'Downloads a youtube channel and its videos and stores them '\
                   'locally as a podcatcher-friendly feed'
   s.authors     = ['Steffen Schröder']
   s.email       = 'steffen@schröder.xyz'
