@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 Gem::Specification.new do |s|
   s.name        = 'fyt'
-  s.version     = '1.0.0.pre'
+  s.version     = '1.0.0'
   s.executables << 'fyt'
-  s.date        = '2017-08-08'
+  s.date        = '2017-08-21'
   s.summary     = 'fyt'
   s.description = 'Downloads a youtube channel and its videos and stores them '\
                   'locally as a podcatcher-friendly feed'
