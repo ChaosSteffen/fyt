@@ -32,9 +32,9 @@ module FYT
     )
 
     config[:feeds].each do |feed_config|
-      source_feed = FYT::Parser.new(feed_config[:url]).read
+      source_feed = FYT::Parser.new(feed_config[:url], config[:proxy]).read
 
-      new_feed = FYT::Builder.new(source_feed, storage, config[:server_prefix]).build
+      new_feed = FYT::Builder.new(source_feed, storage, config[:server_prefix], config[:proxy]).build
 
       storage.add_feed(feed_config[:name], new_feed)
     end
