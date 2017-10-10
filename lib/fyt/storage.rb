@@ -2,11 +2,11 @@
 module FYT
   # Manages file downloads and storage
   class Storage < FYT::Base
-    def initialize(path, format_options, output_format, proxy = nil)
+    def initialize(path, format_options, output_format, proxy_manager)
       @path = path || ''
       @format_options = format_options
       @output_format = output_format
-      @proxy = proxy
+      @proxy_manager = proxy_manager
       @known_files = []
     end
 
@@ -50,12 +50,14 @@ module FYT
     private
 
     def download_file!(url, output_path)
+      proxy = @proxy_manager.get!
+
       options = [
         "-f '#{@format_options}'",
         "--merge-output-format '#{@output_format}'",
         "-o '#{output_path}'"
       ]
-      options << "--proxy '#{@proxy}'" if @proxy
+      options << "--proxy 'http://#{proxy.url}'"
       options << "'#{url}'"
 
       options_string = options.join(' ')
@@ -63,6 +65,8 @@ module FYT
       logger.debug "Executing: youtube-dl #{options_string}"
 
       execute "youtube-dl #{options_string}"
+    rescue
+      download_file!(url, output_path)
     end
 
     def execute(command_string)

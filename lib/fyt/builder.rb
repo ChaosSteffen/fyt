@@ -41,7 +41,7 @@ module FYT
     def add_image(youtube_url, title)
       youtube_url = youtube_url.gsub('http:', 'https:')
 
-      open(youtube_url, proxy: @proxy) do |file|
+      open(youtube_url, proxy: 'http://' + @proxy.url) do |file|
         image_url =
           file.read.scan(/<meta property=\"og:image\" content=\"(.*)\">/)
               .flatten.first

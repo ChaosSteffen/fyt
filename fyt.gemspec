@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 Gem::Specification.new do |s|
   s.name        = 'fyt'
-  s.version     = '1.0.0'
+  s.version     = '1.1.0.pre'
   s.executables << 'fyt'
-  s.date        = '2017-08-21'
+  s.date        = '2017-10-10'
   s.summary     = 'fyt'
   s.description = 'Downloads a youtube channel and its videos and stores them '\
                   'locally as a podcatcher-friendly feed'
@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
   ]
   s.homepage    = 'https://github.com/ChaosSteffen/fyt'
   s.license     = 'BSD-2-Clause'
+  s.add_runtime_dependency 'proxy_fetcher', '~> 0.5'
 end

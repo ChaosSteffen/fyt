@@ -7,6 +7,8 @@ require_relative 'fyt/storage'
 
 require 'fileutils'
 
+require 'proxy_fetcher'
+
 # handles the general behaviour of FYT
 module FYT
   def self.lock
@@ -24,17 +26,19 @@ module FYT
 
   def self.run
     config = FYT::Config.new
+    manager =
+      ProxyFetcher::Manager.new(filters: { country: 'DE', maxtime: '500' })
     storage = FYT::Storage.new(
       config[:storage_path],
       config[:format_options],
       config[:output_format],
-      config[:proxy]
+      manager
     )
 
     config[:feeds].each do |feed_config|
-      source_feed = FYT::Parser.new(feed_config[:url], config[:proxy]).read
+      source_feed = FYT::Parser.new(feed_config[:url], manager.get!).read
 
-      new_feed = FYT::Builder.new(source_feed, storage, config[:server_prefix], config[:proxy]).build
+      new_feed = FYT::Builder.new(source_feed, storage, config[:server_prefix], manager.get!).build
 
       storage.add_feed(feed_config[:name], new_feed)
     end

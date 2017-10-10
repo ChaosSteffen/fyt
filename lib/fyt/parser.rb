@@ -11,7 +11,7 @@ module FYT
     end
 
     def read
-      open(@url, proxy: @proxy) do |rss|
+      open(@url, proxy: 'http://' + @proxy.url) do |rss|
         return RSS::Parser.parse(rss, false)
       end
     end
