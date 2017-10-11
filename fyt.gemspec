@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 Gem::Specification.new do |s|
   s.name        = 'fyt'
-  s.version     = '1.1.0.pre'
+  s.version     = '1.1.0'
   s.executables << 'fyt'
   s.date        = '2017-10-10'
   s.summary     = 'fyt'
