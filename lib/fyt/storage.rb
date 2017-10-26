@@ -76,7 +76,7 @@ module FYT
         break if system(command_string, out: write_io, err: write_io)
 
         write_io.close
-        logger.error read_io.read
+        logger.debug read_io.read
         raise
       end
     end
