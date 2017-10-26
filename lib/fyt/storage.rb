@@ -62,7 +62,7 @@ module FYT
 
       logger.debug "Executing: youtube-dl #{options_string}"
 
-      execute "youtube-dl #{options_string}"
+      execute "timeout --preserve-status 300 youtube-dl #{options_string}"
     rescue
       @proxy_manager.remove(proxy)
 
