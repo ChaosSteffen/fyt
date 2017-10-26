@@ -9,6 +9,14 @@ require 'fileutils'
 
 require 'proxy_fetcher'
 
+module ProxyFetcher
+  class Manager
+    def remove(proxy)
+      @proxies = @proxies - [proxy]
+    end
+  end
+end
+
 # handles the general behaviour of FYT
 module FYT
   def self.lock
@@ -36,9 +44,9 @@ module FYT
     )
 
     config[:feeds].each do |feed_config|
-      source_feed = FYT::Parser.new(feed_config[:url], manager.get!).read
+      source_feed = FYT::Parser.new(feed_config[:url], manager).read
 
-      new_feed = FYT::Builder.new(source_feed, storage, config[:server_prefix], manager.get!).build
+      new_feed = FYT::Builder.new(source_feed, storage, config[:server_prefix], manager).build
 
       storage.add_feed(feed_config[:name], new_feed)
     end

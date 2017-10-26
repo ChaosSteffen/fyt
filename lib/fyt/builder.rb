@@ -2,11 +2,11 @@
 module FYT
   # processes the Youtube feed
   class Builder < FYT::Base
-    def initialize(source_feed, storage, server_prefix, proxy)
+    def initialize(source_feed, storage, server_prefix, proxy_manager)
       @source_feed = source_feed
       @storage = storage
       @server_prefix = server_prefix
-      @proxy = proxy
+      @proxy_manager = proxy_manager
       @maker = RSS::Maker['2.0'].new
     end
 
@@ -39,9 +39,10 @@ module FYT
     end
 
     def add_image(youtube_url, title)
+      proxy = @proxy_manager.get!
       youtube_url = youtube_url.gsub('http:', 'https:')
 
-      open(youtube_url, proxy: 'http://' + @proxy.url) do |file|
+      open(youtube_url, proxy: 'http://' + proxy.url) do |file|
         image_url =
           file.read.scan(/<meta property=\"og:image\" content=\"(.*)\">/)
               .flatten.first
@@ -51,6 +52,10 @@ module FYT
       end
     rescue OpenURI::HTTPError => e
       logger.debug "OpenURI::HTTPError: #{e.message}"
+    rescue
+      @proxy_manager.remove(proxy)
+
+      add_image(youtube_url, title) if @proxy_manager.proxies.size > 0
     end
 
     def add_item(link, title, filename)

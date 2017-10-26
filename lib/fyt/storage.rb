@@ -66,7 +66,9 @@ module FYT
 
       execute "youtube-dl #{options_string}"
     rescue
-      download_file!(url, output_path)
+      @proxy_manager.remove(proxy)
+
+      download_file!(url, output_path) if @proxy_manager.proxies.size > 0
     end
 
     def execute(command_string)

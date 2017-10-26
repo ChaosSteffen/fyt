@@ -5,15 +5,21 @@ require 'rss'
 module FYT
   # reads and prepares a youtube feed for further processing
   class Parser < FYT::Base
-    def initialize(url, proxy)
+    def initialize(url, proxy_manager)
       @url = url
-      @proxy = proxy
+      @proxy_manager = proxy_manager
     end
 
     def read
-      open(@url, proxy: 'http://' + @proxy.url) do |rss|
+      proxy = @proxy_manager.get!
+
+      open(@url, proxy: 'http://' + proxy.url) do |rss|
         return RSS::Parser.parse(rss, false)
       end
+    rescue
+      @proxy_manager.remove(proxy)
+
+      read if @proxy_manager.proxies.size > 0
     end
   end
 end
