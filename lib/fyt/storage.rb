@@ -52,15 +52,13 @@ module FYT
     def download_file!(url, output_path)
       proxy = @proxy_manager.get!
 
-      options = [
+      options_string = [
         "-f '#{@format_options}'",
         "--merge-output-format '#{@output_format}'",
-        "-o '#{output_path}'"
-      ]
-      options << "--proxy 'http://#{proxy.url}'"
-      options << "'#{url}'"
-
-      options_string = options.join(' ')
+        "-o '#{output_path}'",
+        "--proxy 'http://#{proxy.url}'",
+        "'#{url}'"
+      ].join(' ')
 
       logger.debug "Executing: youtube-dl #{options_string}"
 
