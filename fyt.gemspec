@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Gem::Specification.new do |s|
   s.name        = 'fyt'
   s.version     = '1.3.0.pre'
@@ -15,6 +16,8 @@ Gem::Specification.new do |s|
     'lib/fyt/builder.rb',
     'lib/fyt/config.rb',
     'lib/fyt/parser.rb',
+    'lib/fyt/storage.rb',
+    'lib/fyt/storage_helper.rb',
     'lib/fyt/s3_storage.rb'
   ]
   s.homepage    = 'https://github.com/ChaosSteffen/fyt'

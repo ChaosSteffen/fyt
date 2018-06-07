@@ -4,6 +4,7 @@ require_relative 'fyt/builder'
 require_relative 'fyt/config'
 require_relative 'fyt/parser'
 require_relative 'fyt/storage'
+require_relative 'fyt/storage_helper'
 require_relative 'fyt/s3_storage'
 
 require 'fileutils'

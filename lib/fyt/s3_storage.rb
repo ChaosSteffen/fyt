@@ -5,6 +5,8 @@ require 'aws-sdk-s3'
 module FYT
   # Manages file downloads and storage
   class S3Storage < FYT::Base
+    include FYT::StorageHelper
+
     def initialize(tmp_path, format_options, output_format, proxy_manager)
       @tmp_path = tmp_path || ''
       @format_options = format_options
@@ -71,17 +73,7 @@ module FYT
       rescue
         @proxy_manager.remove(proxy)
 
-        download_file!(url, filename) unless @proxy_manager.proxies.size.empty?
-      end
-    end
-
-    def execute(command_string)
-      IO.pipe do |read_io, write_io|
-        break if system(command_string, out: write_io, err: write_io)
-
-        write_io.close
-        logger.debug read_io.read
-        raise
+        download_file!(url, filename) unless @proxy_manager.proxies.empty?
       end
     end
 
@@ -122,27 +114,6 @@ module FYT
       Aws::S3::Resource
         .new(region: 'eu-central-1')
         .bucket('fyt-storage')
-    end
-
-    def timeout_cmd
-      if system('which timeout', out: '/dev/null')
-        return 'timeout --preserve-status 300'
-      end
-
-      raise unless system('which gtimeout', out: '/dev/null')
-
-      'gtimeout --preserve-status 300'
-    end
-
-    def youtube_dl_cmd(proxy, url, filename)
-      [
-        'youtube-dl',
-        "-f '#{@format_options}'",
-        "--merge-output-format '#{@output_format}'",
-        "-o '#{tmp_path_for(filename)}'",
-        "--proxy 'http:#{proxy.url}'",
-        "'#{url}'"
-      ].join(' ')
     end
   end
 end

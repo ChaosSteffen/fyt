@@ -67,7 +67,7 @@ module FYT
     rescue
       @proxy_manager.remove(proxy)
 
-      download_file!(url, output_path) unless @proxy_manager.proxies.size.empty?
+      download_file!(url, output_path) unless @proxy_manager.proxies.empty?
     end
 
     def execute(command_string)

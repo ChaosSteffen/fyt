@@ -56,7 +56,7 @@ module FYT
     rescue
       @proxy_manager.remove(proxy)
 
-      add_image(youtube_url, title) unless @proxy_manager.proxies.size.empty?
+      add_image(youtube_url, title) unless @proxy_manager.proxies.empty?
     end
 
     def add_item(link, title, filename)
