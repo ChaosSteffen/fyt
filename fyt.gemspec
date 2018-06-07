@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 Gem::Specification.new do |s|
   s.name        = 'fyt'
-  s.version     = '1.2.0'
+  s.version     = '1.3.0.pre'
   s.executables << 'fyt'
   s.date        = '2017-10-10'
   s.summary     = 'fyt'
@@ -15,9 +15,10 @@ Gem::Specification.new do |s|
     'lib/fyt/builder.rb',
     'lib/fyt/config.rb',
     'lib/fyt/parser.rb',
-    'lib/fyt/storage.rb'
+    'lib/fyt/s3_storage.rb'
   ]
   s.homepage    = 'https://github.com/ChaosSteffen/fyt'
   s.license     = 'BSD-2-Clause'
-  s.add_runtime_dependency 'proxy_fetcher', '~> 0.5'
+  s.add_runtime_dependency 'aws-sdk-s3', '= 1.13.0'
+  s.add_runtime_dependency 'proxy_fetcher', '= 0.6.5'
 end

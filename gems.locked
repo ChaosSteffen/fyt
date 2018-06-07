@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     fyt (1.2.0)
+      aws-sdk-s3 (~> 1.13.0)
       proxy_fetcher (~> 0.5)
 
 GEM
@@ -9,6 +10,21 @@ GEM
   specs:
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    aws-eventstream (1.0.0)
+    aws-partitions (1.91.0)
+    aws-sdk-core (3.21.2)
+      aws-eventstream (~> 1.0)
+      aws-partitions (~> 1.0)
+      aws-sigv4 (~> 1.0)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.5.0)
+      aws-sdk-core (~> 3)
+      aws-sigv4 (~> 1.0)
+    aws-sdk-s3 (1.13.0)
+      aws-sdk-core (~> 3, >= 3.21.2)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.0)
+    aws-sigv4 (1.0.2)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     http (3.3.0)
@@ -20,6 +36,7 @@ GEM
       domain_name (~> 0.5)
     http-form_data (2.1.1)
     http_parser.rb (0.6.0)
+    jmespath (1.4.0)
     proxy_fetcher (0.7.0)
       http (~> 3.0)
     public_suffix (3.0.2)

@@ -4,10 +4,12 @@ require_relative 'fyt/builder'
 require_relative 'fyt/config'
 require_relative 'fyt/parser'
 require_relative 'fyt/storage'
+require_relative 'fyt/s3_storage'
 
 require 'fileutils'
 
 require 'proxy_fetcher'
+require 'aws-sdk-s3'
 
 module ProxyFetcher
   class Manager
@@ -36,12 +38,31 @@ module FYT
     config = FYT::Config.new
     manager =
       ProxyFetcher::Manager.new(filters: { country: 'DE', maxtime: '500' })
-    storage = FYT::Storage.new(
-      config[:storage_path],
-      config[:format_options],
-      config[:output_format],
-      manager
-    )
+
+    case config[:storage_type]
+    when :local
+      storage = FYT::S3Storage.new(
+        config[:storage_path],
+        config[:format_options],
+        config[:output_format],
+        manager
+      )
+    when :aws
+      storage = FYT::S3Storage.new(
+        config[:tmp_path],
+        config[:format_options],
+        config[:output_format],
+        manager
+      )
+
+      Aws.config.update(
+        credentials: Aws::Credentials.new(
+          config[:aws][:access_key], config[:aws][:secret_key]
+        )
+      )
+    else
+      raise 'no storage_type configured'
+    end
 
     config[:feeds].each do |feed_config|
       source_feed = FYT::Parser.new(feed_config[:url], manager).read
