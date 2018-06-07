@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module FYT
   # Manages file downloads and storage
   class Storage < FYT::Base
@@ -66,7 +67,7 @@ module FYT
     rescue
       @proxy_manager.remove(proxy)
 
-      download_file!(url, output_path) if @proxy_manager.proxies.size > 0
+      download_file!(url, output_path) unless @proxy_manager.proxies.size.empty?
     end
 
     def execute(command_string)

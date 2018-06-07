@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module FYT
   # processes the Youtube feed
   class Builder < FYT::Base
@@ -55,7 +56,7 @@ module FYT
     rescue
       @proxy_manager.remove(proxy)
 
-      add_image(youtube_url, title) if @proxy_manager.proxies.size > 0
+      add_image(youtube_url, title) unless @proxy_manager.proxies.size.empty?
     end
 
     def add_item(link, title, filename)
