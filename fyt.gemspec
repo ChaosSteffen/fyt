@@ -2,9 +2,9 @@
 
 Gem::Specification.new do |s|
   s.name        = 'fyt'
-  s.version     = '1.3.0.pre'
+  s.version     = '1.3.0'
   s.executables << 'fyt'
-  s.date        = '2017-10-10'
+  s.date        = '2018-12-03'
   s.summary     = 'fyt'
   s.description = 'Downloads a youtube channel and its videos and stores them '\
                   'locally as a podcatcher-friendly feed'
@@ -23,5 +23,6 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/ChaosSteffen/fyt'
   s.license     = 'BSD-2-Clause'
   s.add_runtime_dependency 'aws-sdk-s3', '= 1.13.0'
+  s.add_runtime_dependency 'nokogiri', '= 1.8.5'
   s.add_runtime_dependency 'proxy_fetcher', '= 0.6.5'
 end
